@@ -1,19 +1,17 @@
 export class TreeNode {
 	id: string;
 	value: string;
-	parent: TreeNode|null;
+	checked: boolean
+	parent?: TreeNode;
 	children: TreeNode[] = [];
 
-	constructor(id: string, value: string, parent:TreeNode|null) {
+	constructor(id: string, value: string, parent?:TreeNode) {
 		this.id = id;
 		this.value = value;
 		this.parent = parent;
+		this.checked = false;
 		if (this.parent) this.parent.children.push(this);
 	}
-
-	// public addChild = () => {
-	// 	this.children.push(new TreeNode(this.id + String(this.children.length), 'test', this))
-	// }
 
 	get isLeaf() {
 		return this.children.length === 0;

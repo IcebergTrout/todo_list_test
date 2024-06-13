@@ -1,10 +1,11 @@
 import { TreeNode } from './TreeNode';
+import {v4} from 'uuid';
 
 export class Tree {
 	root: TreeNode
 
 	constructor(id: string, value: string) {
-		this.root = new TreeNode(id, value, null);
+		this.root = new TreeNode(id, value, undefined);
 	}
 
 	*preOrderTraversal(node = this.root): Generator<TreeNode> {
@@ -26,10 +27,11 @@ export class Tree {
 	}
 
 	insert(parentNodeKey: any, value: string) {
-		console.log("insert");
+		// console.log("insert");
 		for (let node of this.preOrderTraversal()) {
 			if (node.id === parentNodeKey) {
-				const newNode = new TreeNode(node.id + "[" + String(node.children.length) + "]", value, node);
+				const uid = v4();
+				new TreeNode(uid, value, node);
 				return true;
 			}
 		}
@@ -49,6 +51,8 @@ export class Tree {
 
 	find(id: any) {
 		for (let node of this.preOrderTraversal()) {
+			// console.log(node.id);
+			// console.log(id);
 			if (node.id === id) return node;
 		}
 		return undefined;
