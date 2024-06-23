@@ -1,6 +1,6 @@
 import React from 'react';
-import TreeComponent from './TreeComponent';
-import Tree from './Tree';
+import TreeComponent from './components/TreeComponent';
+import Tree from '../backend/Tree';
 
 const treeData = new Tree('root', 'Root');
 treeData.insert("root", "test");

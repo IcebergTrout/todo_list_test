@@ -1,7 +1,7 @@
 // TreeComponent.tsx
 import React, { useState } from 'react';
-import { TreeNode } from './TreeNode';
-import { Tree } from './Tree';
+import { TreeNode } from '../../backend/TreeNode';
+import { Tree } from '../../backend/Tree';
 
 interface TreeProps {
 	tree: Tree;
