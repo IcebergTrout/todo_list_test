@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { TreeNode } from '../../backend/TreeNode';
 import { Tree } from '../../backend/Tree';
+import { Button } from '@/components/ui/button';
 
 interface TreeProps {
 	tree: Tree;
@@ -56,8 +57,8 @@ const TreeComponent: React.FC<TreeProps> = ({ tree }) => {
 						<span onDoubleClick={() => setEditingNodeId(node.id)}>{node.value}</span>
 					)}
 				</label>
-				<input type="button" value="+" onClick={() => handleInsert(node)} />
-				<input type="button" value="-" onClick={() => handleRemove(node)} />
+				<Button onClick={() => handleInsert(node)}>+</Button>
+				<Button onClick={() => handleRemove(node)}>-</Button>
 				{node.children.length > 0 && (
 					<ul>
 						{node.children.map((child) => renderTree(child))}
@@ -68,10 +69,14 @@ const TreeComponent: React.FC<TreeProps> = ({ tree }) => {
 	}
 
 	return (
-		<ul>
-			<input type="button" value="+" onClick={() => handleInsert(tree.find('root'))} />
-			{tree.root.children.map((child: TreeNode) => renderTree(child))}
-		</ul>
+		<>
+			<h2>
+				{tree.name}
+			</h2>
+			<ul>
+				<Button value="+" onClick={() => handleInsert(tree.root)}>+</Button>
+				{tree.root.children.map((child: TreeNode) => renderTree(child))}
+			</ul></>
 	);
 };
 

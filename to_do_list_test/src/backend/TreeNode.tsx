@@ -1,11 +1,11 @@
 export class TreeNode {
 	id: string;
-	value: string;
-	checked: boolean
+	value: string | undefined;
+	checked: boolean;
 	parent?: TreeNode;
 	children: TreeNode[] = [];
 
-	constructor(id: string, value: string, parent?:TreeNode) {
+	constructor(id: string, value?: string, parent?:TreeNode) {
 		this.id = id;
 		this.value = value;
 		this.parent = parent;

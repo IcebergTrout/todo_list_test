@@ -2,10 +2,14 @@ import { TreeNode } from './TreeNode';
 import {v4} from 'uuid';
 
 export class Tree {
-	root: TreeNode
+	root: TreeNode;
+	id: string;
+	name: string;
 
-	constructor(id: string, value: string) {
-		this.root = new TreeNode(id, value, undefined);
+	constructor(name: string) {
+		this.id = v4();
+		this.root = new TreeNode(this.id);
+		this.name = name;
 	}
 
 	*preOrderTraversal(node = this.root): Generator<TreeNode> {
@@ -55,7 +59,16 @@ export class Tree {
 			// console.log(id);
 			if (node.id === id) return node;
 		}
+		console.log("did not find node")
 		return undefined;
+	}
+
+	nodeList() {
+		const allNodes: TreeNode[] = [];
+		for (let node of this.preOrderTraversal()) {
+			allNodes.push(node);
+		}
+		return allNodes;
 	}
 }
 
