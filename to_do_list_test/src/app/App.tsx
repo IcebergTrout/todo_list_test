@@ -10,10 +10,6 @@ import { CreateTreeSelect } from '@/components/create-tree-select';
 const App: React.FC = () => {
   const [trees, setTrees] = React.useState<Tree[]>([]);
   const [selectedTree, setSelectedTree] = React.useState<Tree>();
-  const handleSelectTree = (theTree: Tree) => {
-    setSelectedTree(theTree);
-    console.log(selectedTree);
-  }
   return (
     <div>
       <h1>Tree Display with Checkboxes</h1>
