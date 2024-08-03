@@ -13,8 +13,6 @@ const TreeComponent: React.FC<TreeProps> = ({ tree, updateTree }) => {
   const [, setUpdate] = useState(false); // State to trigger re-render
   const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
 
-	console.log(tree);
-
   const handleCheckboxChange = (node: TreeNode | undefined) => {
     if (node) {
       node.checked = !node.checked;

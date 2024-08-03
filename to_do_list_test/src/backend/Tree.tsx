@@ -1,5 +1,5 @@
 import { TreeNode } from './TreeNode';
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export class Tree {
 	root: TreeNode;
@@ -7,9 +7,9 @@ export class Tree {
 	name: string;
 	nodes: TreeNode[];
 
-	constructor(name: string, root?: TreeNode) {
-		this.id = v4();
-		this.root = root ? root : new TreeNode(this.id);
+	constructor(name: string) {
+		this.id = uuidv4();
+		this.root = new TreeNode(this.id);
 		this.name = name;
 		this.nodes = [this.root];
 	}
@@ -33,9 +33,10 @@ export class Tree {
 	}
 
 	insert(parentNode: TreeNode, value: string) {
-		const uid = v4();
+		const uid = uuidv4();
 		if (parentNode) {
-			this.nodes.push(new TreeNode(uid, value, parentNode));
+			const newNode = new TreeNode(uid, value, parentNode);
+			this.nodes.push(newNode);
 			return true;
 		}
 		return false;
@@ -44,33 +45,24 @@ export class Tree {
 	remove(node: TreeNode) {
 		if (!node.parent) return false;
 
-		const filteredChildren = node.parent.children.filter((c: { id: string; }) => c.id !== node.id);
+		const filteredChildren = node.parent.children.filter((c) => c.id !== node.id);
 
-		if (filteredChildren.length == node.parent.children.length) return false;
+		if (filteredChildren.length === node.parent.children.length) return false;
 
 		node.parent.children = filteredChildren;
-		this.nodes = this.nodes.filter((c: { id: string; }) => c.id !== node.id);
-		console.log(this.nodes);
+		this.nodes = this.nodes.filter((c) => c.id !== node.id);
 		return true;
 	}
 
-	find(id: any) {
+	find(id: string) {
 		for (let node of this.preOrderTraversal()) {
-			// console.log(node.id);
-			// console.log(id);
 			if (node.id === id) return node;
 		}
-		console.log("did not find node")
 		return undefined;
 	}
 
 	getNodes() {
 		return this.nodes;
-		// const allNodes: TreeNode[] = [];
-		// for (let node of this.preOrderTraversal()) {
-		// 	allNodes.push(node);
-		// }
-		// return allNodes;
 	}
 
 	toJSON() {
