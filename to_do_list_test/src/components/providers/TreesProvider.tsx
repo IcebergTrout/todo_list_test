@@ -24,7 +24,7 @@ export const TreesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     // Store trees data in local storage whenever it changes
 		console.log(JSON.stringify(trees));
-    localStorage.setItem('trees', JSON.stringify(trees.map(tree => tree.toJSON())));
+    if (trees.length > 0) {localStorage.setItem('trees', JSON.stringify(trees.map(tree => tree.toJSON())))};
   }, [trees]);
 
 	
