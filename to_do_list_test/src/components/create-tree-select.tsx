@@ -38,11 +38,6 @@ export function CreateTreeSelect({
           {trees.map((tree) => (
             <SelectItem key={tree.id.toString()} value={tree.id.toString()}>{tree.name}</SelectItem>
           ))}
-          {/* <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem> */}
         </SelectGroup>
       </SelectContent>
     </Select>

@@ -5,7 +5,7 @@ export class TreeNode {
 	parent?: TreeNode;
 	children: TreeNode[] = [];
 
-	constructor(id: string, value?: string, parent?:TreeNode) {
+	constructor(id: string, value?: string, parent?: TreeNode) {
 		this.id = id;
 		this.value = value;
 		this.parent = parent;
@@ -19,5 +19,21 @@ export class TreeNode {
 
 	get hasChildren() {
 		return !this.isLeaf;
+	}
+
+	toJSON(): any {
+		return {
+			id: this.id,
+			value: this.value,
+			checked: this.checked,
+			children: this.children.map(child => child.toJSON()),
+		};
+	}
+
+	static fromJSON(json: any, parent?: TreeNode): TreeNode {
+		const node = new TreeNode(json.id, json.value, parent);
+		node.checked = json.checked;
+		node.children = json.children.map((childId: string) => new TreeNode(childId, '', node));
+		return node;
 	}
 }

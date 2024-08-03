@@ -1,15 +1,17 @@
 import { TreeNode } from './TreeNode';
-import {v4} from 'uuid';
+import { v4 } from 'uuid';
 
 export class Tree {
 	root: TreeNode;
 	id: string;
 	name: string;
+	nodes: TreeNode[];
 
-	constructor(name: string) {
+	constructor(name: string, root?: TreeNode) {
 		this.id = v4();
-		this.root = new TreeNode(this.id);
+		this.root = root ? root : new TreeNode(this.id);
 		this.name = name;
+		this.nodes = [this.root];
 	}
 
 	*preOrderTraversal(node = this.root): Generator<TreeNode> {
@@ -30,27 +32,26 @@ export class Tree {
 		yield node;
 	}
 
-	insert(parentNodeKey: any, value: string) {
-		// console.log("insert");
-		for (let node of this.preOrderTraversal()) {
-			if (node.id === parentNodeKey) {
-				const uid = v4();
-				new TreeNode(uid, value, node);
-				return true;
-			}
+	insert(parentNode: TreeNode, value: string) {
+		const uid = v4();
+		if (parentNode) {
+			this.nodes.push(new TreeNode(uid, value, parentNode));
+			return true;
 		}
 		return false;
 	}
 
-	remove(id: any) {
-		for (let node of this.preOrderTraversal()) {
-			const filtered = node.children.filter((c: { id: any; }) => c.id !== id);
-			if (filtered.length !== node.children.length) {
-				node.children = filtered;
-				return true;
-			}
-		}
-		return false;
+	remove(node: TreeNode) {
+		if (!node.parent) return false;
+
+		const filteredChildren = node.parent.children.filter((c: { id: string; }) => c.id !== node.id);
+
+		if (filteredChildren.length == node.parent.children.length) return false;
+
+		node.parent.children = filteredChildren;
+		this.nodes = this.nodes.filter((c: { id: string; }) => c.id !== node.id);
+		console.log(this.nodes);
+		return true;
 	}
 
 	find(id: any) {
@@ -63,12 +64,29 @@ export class Tree {
 		return undefined;
 	}
 
-	nodeList() {
-		const allNodes: TreeNode[] = [];
-		for (let node of this.preOrderTraversal()) {
-			allNodes.push(node);
-		}
-		return allNodes;
+	getNodes() {
+		return this.nodes;
+		// const allNodes: TreeNode[] = [];
+		// for (let node of this.preOrderTraversal()) {
+		// 	allNodes.push(node);
+		// }
+		// return allNodes;
+	}
+
+	toJSON() {
+		return {
+			id: this.id,
+			name: this.name,
+			nodes: this.nodes.map((node) => node.toJSON()),
+		};
+	}
+
+	static fromJSON(json: any): Tree {
+		const tree = new Tree(json.name);
+		tree.id = json.id;
+		tree.nodes = json.nodes.map((nodeData: any) => TreeNode.fromJSON(nodeData));
+		tree.root = tree.nodes.find((node) => node.id === tree.id)!;
+		return tree;
 	}
 }
 
