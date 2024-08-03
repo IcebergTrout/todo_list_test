@@ -1,14 +1,16 @@
-# ToDo List Project
-all versions of todo list application
+# ToDo List Project  
+all versions of todo list application  
 
-## Chopping Block:
-how to save todo lists?
+## Chopping Block:  
+- Development
+    - To Do list structure? DONE!
+    Fancy trees(id, name, root, `[nodes]`)
 
-## Important Commands
-Runs typescript files
-node --loader ts-node/esm src/server/test.tsx
+    - Render todo lists onto page. DONE!
 
-## Important SQLite stuff to know
-use pragma to get info about the database (names of table columns, existing tables etc.)
-https://www.sqlite.org/pragma.html
-https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#pragmastring-options---results
+    - Have multiple lists, switch between them. (temporary, works for now.)
+
+    - How to save todo lists?  DONE!
+    **JS LocalStorage!**  
+
+    - Pretty things up! Figure out how elements should be formatted, positioned, sized, etc.
