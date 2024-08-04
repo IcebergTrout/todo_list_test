@@ -18,14 +18,28 @@ import {
 // import { Label } from "@/components/ui/label"
 
 export default function CreateClearTreesDialog({
+	trees,
 	setTrees,
-	setSelectedTree
+	selectedTree,
+	setSelectedTree,
+	single
 }: {
+	trees: Tree[];
 	setTrees: (trees: Tree[]) => void;
+	selectedTree: Tree | undefined;
 	setSelectedTree: (selectedTree: Tree | undefined) => void;
+	single: boolean
 }) {
+	const deleteText = single ? `Delete \'${selectedTree?.name}\'` : "Clear All Trees";
+
 	const clearAllTrees = () => {
 		setTrees([]);
+		setSelectedTree(undefined);
+	}
+
+	const clearSingleTree = () => {
+		const newTrees = trees.filter((t) => t.id !== selectedTree!.id);
+		setTrees(newTrees);
 		setSelectedTree(undefined);
 	}
 
@@ -33,15 +47,19 @@ export default function CreateClearTreesDialog({
 		<div>
 			<Dialog>
 				<DialogTrigger asChild>
-					<Button variant="destructive">Clear All Trees</Button>
+					<Button variant="destructive">{deleteText}</Button>
 				</DialogTrigger>
 				<DialogContent className="sm:max-w-[425px]">
 					{/* <DialogHeader> */}
-						<DialogTitle className="dark:text-slate-300 text-3xl">Clear All Trees?</DialogTitle>
+						<DialogTitle className="dark:text-slate-300 text-3xl">{deleteText}?</DialogTitle>
 					{/* </DialogHeader> */}
 					<DialogFooter>
 						<DialogClose asChild>
-							<Button variant="destructive" type="submit" onClick={() => clearAllTrees()}>Clear</Button>
+							{single ? (
+								<Button variant="destructive" type="submit" onClick={() => clearSingleTree()}>Delete</Button>
+							) : (
+								<Button variant="destructive" type="submit" onClick={() => clearAllTrees()}>Clear</Button>
+							)}
 						</DialogClose>
 					</DialogFooter>
 				</DialogContent>

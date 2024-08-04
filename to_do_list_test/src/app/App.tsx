@@ -26,13 +26,16 @@ const App: React.FC = () => {
   return (
     <div className='p-10 min-h-min h-screen dark:bg-slate-800 dark:text-slate-300'>
       <h1 className='text-3xl font-bold dark:text-slate-300'>Tree Display with Checkboxes</h1>
-			<CreateClearTreesDialog setTrees={setTrees} setSelectedTree={setSelectedTree}/>
+			<CreateClearTreesDialog single={false} trees={trees} setTrees={setTrees} selectedTree={selectedTree} setSelectedTree={setSelectedTree}/>
       <CreateTreeDialog trees={trees} setTrees={setTrees} />
       <CreateTreeSelect trees={trees} setSelectedTree={setSelectedTree} />
 
-      <div>
+      <div className='pt-6'>
         {selectedTree ? (
+					<>
+					<CreateClearTreesDialog single={true} trees={trees} setTrees={setTrees} selectedTree={selectedTree} setSelectedTree={setSelectedTree}/>
           <TreeComponent tree={selectedTree!} updateTree={updateSelectedTree} />
+					</>
         ) : (
           <>No Valid Tree</>
         )}
