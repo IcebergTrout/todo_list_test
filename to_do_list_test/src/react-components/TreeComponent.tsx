@@ -16,6 +16,7 @@ const TreeComponent: React.FC<TreeProps> = ({ tree, updateTree }) => {
 	const [, setUpdate] = useState(false); // State to trigger re-render
 	// const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
 	const textAreaRefs = useRef<Record<string, HTMLTextAreaElement | null>>({});
+	const [focusStates, setFocusStates] = useState<{ [key: string]: boolean }>({});
 
 	const handleCheckboxChange = (node: TreeNode | undefined) => {
 		if (node) {
@@ -48,6 +49,14 @@ const TreeComponent: React.FC<TreeProps> = ({ tree, updateTree }) => {
 		setUpdate(prev => !prev); // Trigger re-render
 	};
 
+	const handleFocus = (id: string) => {
+		setFocusStates((prev) => ({ ...prev, [id]: true }));
+	};
+
+	const handleBlur = (id: string) => {
+    setFocusStates((prev) => ({ ...prev, [id]: false }));
+  };
+
 	const autoResizeTextarea = (textarea: HTMLTextAreaElement) => {
 		textarea.style.height = 'auto';
 		textarea.style.height = `${textarea.scrollHeight}px`;
@@ -76,7 +85,9 @@ const TreeComponent: React.FC<TreeProps> = ({ tree, updateTree }) => {
 							className='min-h-[40px] text-xl w-96 h-8 ml-2 px-2 rounded-md dark:bg-transparent dark:border-0 focus-visible:ring-gray-400 focus:bg-[#2f3745] focus-visible:ring-offset-0'
 							value={node.value}
 							onChange={(e) => handleLabelChange(node, e.target.value)}
-							// onBlur={() => setEditingNodeId(null)}
+							spellCheck={focusStates[node.id] || false}
+							onFocus={() => handleFocus(node.id)}
+							onBlur={() => handleBlur(node.id)}
 							onInput={(e) => autoResizeTextarea(e.currentTarget)}
 							rows={1} // Start with a single row
 							style={{ resize: 'none', overflow: 'hidden' }} // Disable manual resizing and hide overflow
