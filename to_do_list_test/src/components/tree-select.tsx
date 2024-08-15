@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select"
 import { Tree } from "@/backend/Tree"
 
-export function CreateTreeSelect({
+export function TreeSelect({
   trees,
   setSelectedTree
 }: {

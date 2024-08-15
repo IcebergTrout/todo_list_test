@@ -3,21 +3,21 @@
 // import { useState } from "react";
 
 import { Tree } from "@/backend/Tree";
-import { Button } from "../components/ui/button";
+import { Button } from "./ui/button";
 import {
 	Dialog,
 	DialogClose,
 	DialogContent,
 	// DialogDescription,
 	DialogFooter,
-	DialogHeader,
+	// DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "../components/ui/dialog";
+} from "./ui/dialog";
 // import { Input } from "../components/ui/input";
 // import { Label } from "@/components/ui/label"
 
-export default function CreateClearTreesDialog({
+export default function ClearTreesDialog({
 	trees,
 	setTrees,
 	selectedTree,
