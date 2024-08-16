@@ -7,11 +7,16 @@ import { TreeSelect } from '@/components/tree-select';
 import './App.css';
 import CreateClearTreesDialog from '@/components/clear-trees-dialog';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const TreeViewer: React.FC = () => {
 	const { trees, setTrees } = useTreesContext();
 	const [selectedTree, setSelectedTree] = React.useState<Tree>();
+	const navigate = useNavigate();
+
+  const handleDashboardButton = () => {
+    navigate('/dashboard');
+  };
 
 	const updateSelectedTree = (updatedTree: Tree) => {
 		setSelectedTree(updatedTree);
@@ -22,7 +27,7 @@ const TreeViewer: React.FC = () => {
 	return (
 		<div className='min-h-min h-screen dark:bg-slate-800 dark:text-slate-300'>
 			<div className='pt-3 pl-3'>
-				<Link to="/dashboard">Dashboard</Link>
+				<Button onClick={handleDashboardButton}>Dashboard</Button>
 			</div>
 			<div className='p-10'>
 				<h1 className='text-3xl font-bold dark:text-slate-300'>Tree Viewer</h1>
