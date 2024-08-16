@@ -9,8 +9,8 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<TreeViewer/>} />
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/tree/:id" element={<TreeViewer/>} />
+        <Route path="/" element={<Dashboard/>}/>
       </Routes>
     </Router>
   );
