@@ -2,6 +2,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import Tree from '@/backend/Tree';
 
+/**
+ * TreesProvider loads trees from localStorage and provides them for child components.
+ * It also saves changes to each tree.
+ */
+
 interface TreesContextType {
   trees: Tree[];
   setTrees: React.Dispatch<React.SetStateAction<Tree[]>>;
