@@ -23,7 +23,7 @@ const TreeViewer: React.FC = () => {
 	};
 
 	return (
-		<div className='min-h-min h-screen dark:bg-slate-800 dark:text-slate-300'>
+		<div className='min-h-screen dark:bg-slate-800 dark:text-slate-300'>
 			<div className='pt-3 pl-3'>
 				<Button onClick={handleDashboardButton}>Dashboard</Button>
 			</div>
