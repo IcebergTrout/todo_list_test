@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
 				<div className="gap-4 flex flex-wrap max-w-screen">
 					{trees.map((tree) => {
 						return (
-								<TreeCard tree={tree}/>
+								<TreeCard key={tree.id} tree={tree}/>
 							);
 					})}
 				</div>

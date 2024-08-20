@@ -35,17 +35,17 @@ export function TreeCard({
 	return (
 		<div className="inline-block">
 			<div 
-				draggable={true} 
+				// draggable={true} 
 				className="relative inline-block" 
-				onDragStart={handleDragStart}
 				onDragEnd={handleDragEnd}
 			>
 				<button 
 					ref={buttonRef}
 					onClick={() => handleTreeRoute(tree.id)} 
-					className={`hover:bg-gray-800 dark:bg-gray-${ isActive ? '900' : '700'}`}
+					onMouseDown={handleDragStart}
 				>
-					<Card>
+					<Card draggable={true} 
+					className={`dark:bg-gray-700 hover:bg-gray-800 ${isActive ? 'active:bg-gray-900' : ''}`}>
 						<CardHeader>
 							<CardTitle>{tree.name}</CardTitle>
 							<CardDescription></CardDescription>
