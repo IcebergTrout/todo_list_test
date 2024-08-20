@@ -3,7 +3,6 @@ import { TreeNode } from '../backend/TreeNode';
 import { Tree } from '../backend/Tree';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-// import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -107,9 +106,9 @@ const TreeComponent: React.FC<TreeProps> = ({ tree, updateTree }) => {
 
 	return (
 		<>
-			<h2 className='text-xl'>
+			<h1 className='text-3xl font-bold'>
 				{tree.name}
-			</h2>
+			</h1>
 			<ul className='list-none list-inside pt-4'>
 				<div className='pb-8'>
 					<Button className='text-lg font-extrabold w-6 h-6 pb-1 dark:bg-slate-400' size='sm' value="+" onClick={() => handleInsert(tree.root)}>+</Button>

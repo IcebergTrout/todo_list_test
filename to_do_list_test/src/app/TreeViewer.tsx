@@ -28,7 +28,7 @@ const TreeViewer: React.FC = () => {
 				<Button onClick={handleDashboardButton}>Dashboard</Button>
 			</div>
 			<div className='p-10'>
-				<h1 className='text-3xl font-bold dark:text-slate-300'>Tree Viewer</h1>
+				{/* <h1 className='text-3xl font-bold dark:text-slate-300'>Tree Viewer</h1> */}
 
 				<div className='pt-6'>
 					{selectedTree ? (

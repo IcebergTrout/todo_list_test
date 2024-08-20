@@ -10,11 +10,14 @@ import ClearTreeDialog from "./clear-tree-dialog";
 import Tree from "@/backend/Tree";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import DropIndicator from "./drop-indicator";
 
 export function TreeCard({
 	tree,
+	handleDragStart,
 }: {
 	tree: Tree;
+	handleDragStart: (card: any) => void;
 }) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const [isActive, setIsActive] = useState(false);
@@ -24,28 +27,37 @@ export function TreeCard({
 		navigate(`/tree/${treeID}`);
 	};
 
-	const handleDragStart = () => {
+	const handleMouseDown = () => {
 		setIsActive(true);
 	};
 
-	const handleDragEnd = () => {
+	const handleMouseUp = () => {
 		setIsActive(false);
 	};
+	
+	const handleMouseStart = (card: {title: string, id: string}) => {
+		handleDragStart(card);
+		handleMouseDown();
+	}
+	
 
 	return (
-		<div className="inline-block">
+		<div className="flex">
+			<DropIndicator beforeId={tree.id}/>
 			<div 
-				// draggable={true} 
 				className="relative inline-block" 
-				onDragEnd={handleDragEnd}
+				onDragStart={() => handleMouseStart({title: tree.name, id: tree.id})}
+				onDragEnd={handleMouseUp}
+				onMouseDown={handleMouseDown}
 			>
 				<button 
 					ref={buttonRef}
 					onClick={() => handleTreeRoute(tree.id)} 
-					onMouseDown={handleDragStart}
 				>
-					<Card draggable={true} 
-					className={`dark:bg-gray-700 hover:bg-gray-800 ${isActive ? 'active:bg-gray-900' : ''}`}>
+					<Card 
+						draggable={true} 
+						className={`dark:bg-gray-700 hover:bg-gray-800 ${isActive ? 'active:bg-gray-900' : ''}`}
+					>
 						<CardHeader>
 							<CardTitle>{tree.name}</CardTitle>
 							<CardDescription></CardDescription>
