@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { DragEvent } from 'react';
 import { useTreesContext } from '@/components/providers/TreesProvider';
 import CreateTreeDialog from '@/components/create-tree-dialog';
 import './App.css';
@@ -14,7 +14,7 @@ const Dashboard: React.FC = () => {
 		setCardId(card.id);
 	}
 
-	const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+	const handleDragEnd = (e: DragEvent<HTMLDivElement>) => {
 		clearHighlights();
 
 		const indicators = getIndicators();
@@ -46,12 +46,12 @@ const Dashboard: React.FC = () => {
 		}
 	}
 
-	const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+	const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		highlightIndicator(e);
 	}
 
-	const highlightIndicator = (e: React.DragEvent<HTMLDivElement>) => {
+	const highlightIndicator = (e: DragEvent<HTMLDivElement>) => {
 		const indicators = getIndicators();
 		clearHighlights(indicators);
 		const el = getNearestIndicator(e, indicators);
@@ -66,7 +66,7 @@ const Dashboard: React.FC = () => {
 		});
 	}
 
-	const getNearestIndicator = (e: React.DragEvent<HTMLDivElement>, indicators: HTMLElement[]) => {
+	const getNearestIndicator = (e: DragEvent<HTMLDivElement>, indicators: HTMLElement[]) => {
 		const DISTANCE_OFFSET = 100;
 
 		const el = indicators.reduce(

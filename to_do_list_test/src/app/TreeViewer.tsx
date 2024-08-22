@@ -17,7 +17,7 @@ const TreeViewer: React.FC = () => {
 		navigate('/');
 	};
 
-	const updateSelectedTree = (updatedTree: Tree) => {
+	const updateTree = (updatedTree: Tree) => {
 		const updatedTrees = trees.map(tree => tree.id === updatedTree.id ? updatedTree : tree);
 		setTrees(updatedTrees);
 	};
@@ -32,7 +32,7 @@ const TreeViewer: React.FC = () => {
 
 				<div className='pt-6'>
 					{selectedTree ? (
-						<TreeComponent tree={selectedTree!} updateTree={updateSelectedTree} />
+						<TreeComponent tree={selectedTree!} updateTree={updateTree} />
 					) : (
 						<>No Valid Tree</>
 					)}
