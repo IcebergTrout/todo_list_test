@@ -14,15 +14,14 @@ interface TreeProps {
 
 const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree }) => {
 	const [, setUpdate] = useState(true); // State to trigger re-render
-	// const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
 	const textAreaRefs = useRef<Record<string, HTMLTextAreaElement | null>>({});
-	const [focusStates, setFocusStates] = useState<{ [key: string]: boolean }>({});
+	const [focusState, setFocusState] = useState<boolean>(false);
 	const [expanded, setExpanded] = useState(false);
 
 	const handleCheckboxChange = (node: TreeNode | undefined) => {
 		if (node) {
 			node.checked = !node.checked;
-			console.log(`Checkbox for node ${node.id} is ${node.checked ? 'checked' : 'unchecked'}`);
+			// console.log(`Checkbox for node ${node.id} is ${node.checked ? 'checked' : 'unchecked'}`);
 			updateTree(tree);
 		}
 		setUpdate(prev => !prev); // Trigger re-render
@@ -50,12 +49,12 @@ const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree }) => {
 		setUpdate(prev => !prev); // Trigger re-render
 	};
 
-	const handleFocus = (id: string) => {
-		setFocusStates((prev) => ({ ...prev, [id]: true }));
+	const handleFocus = () => {
+		setFocusState(true);
 	};
 
-	const handleBlur = (id: string) => {
-		setFocusStates((prev) => ({ ...prev, [id]: false }));
+	const handleBlur = () => {
+		setFocusState(false);
 	};
 
 	const autoResizeTextarea = (textarea: HTMLTextAreaElement) => {
@@ -76,12 +75,12 @@ const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree }) => {
 		<div className='flex flex-row flex-initial items-start space-x-2'>
 			<div className='flex flex-row items-start space-x-2 mt-3'>
 				<Button
-					className="text-lg font-extrabold w-6 h-6 pb-1 dark:bg-slate-400"
+					className="text-lg font-extrabold w-6 h-6 pb-1 dark:bg-slate-400 dark:hover:bg-slate-300/90"
 					size="sm"
 					onClick={() => handleInsert(node)}>+
 				</Button>
 				<Button
-					className="text-lg font-extrabold w-6 h-6 pb-1 dark:bg-slate-400"
+					className="text-lg font-extrabold w-6 h-6 pb-1 dark:bg-slate-400 dark:hover:bg-slate-300/90"
 					size="sm"
 					onClick={() => handleRemove(node)}>-
 				</Button>
@@ -97,9 +96,9 @@ const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree }) => {
 					className='min-h-[40px] text-xl w-96 h-8 ml-2 px-2 rounded-md dark:bg-transparent dark:border-0 focus-visible:ring-gray-400 focus:bg-[#2f3745] focus-visible:ring-offset-0'
 					value={node.value}
 					onChange={(e) => handleLabelChange(node, e.target.value)}
-					spellCheck={focusStates[node.id] || false}
-					onFocus={() => handleFocus(node.id)}
-					onBlur={() => handleBlur(node.id)}
+					spellCheck={focusState || false}
+					onFocus={() => handleFocus()}
+					onBlur={() => handleBlur()}
 					onInput={(e) => autoResizeTextarea(e.currentTarget)}
 					rows={1} // Start with a single row
 					style={{ resize: 'none', overflow: 'hidden' }} // Disable manual resizing and hide overflow
@@ -108,11 +107,11 @@ const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree }) => {
 			</Label>
 			{node.children.length > 0 && (
 				<Button
-					className=''
+					className='size-6 dark:bg-slate-400 dark:hover:bg-slate-300/90 font-bold'
 					size={'sm'}
 					onClick={() => setExpanded(!expanded)}
 				>
-					Expand
+					{expanded ? "..." : "[ ]"}
 				</Button>
 			)}
 		</div>

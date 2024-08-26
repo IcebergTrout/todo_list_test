@@ -25,7 +25,11 @@ const TreeViewer: React.FC = () => {
 	return (
 		<div className='min-h-screen dark:bg-slate-800 dark:text-slate-300'>
 			<div className='pt-3 pl-3'>
-				<Button onClick={handleDashboardButton}>Dashboard</Button>
+				<Button
+					size={'sm'}
+					className='font-bold dark:bg-slate-400 dark:hover:bg-slate-300/90'
+					onClick={handleDashboardButton}>Dashboard
+				</Button>
 			</div>
 			<div className='p-10'>
 				{/* <h1 className='text-3xl font-bold dark:text-slate-300'>Tree Viewer</h1> */}
