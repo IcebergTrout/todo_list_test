@@ -6,18 +6,16 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import ClearTreeDialog from "./clear-tree-dialog";
 import Tree from "@/backend/Tree";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import DropIndicator from "./drop-indicator";
+import { handleDragStart } from "@/handlers/DashboardHandlers";
 
 export function TreeCard({
 	tree,
-	handleDragStart,
 }: {
 	tree: Tree;
-	handleDragStart: (card: any) => void;
 }) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const [isActive, setIsActive] = useState(false);
@@ -35,18 +33,17 @@ export function TreeCard({
 		setIsActive(false);
 	};
 	
-	const handleMouseStart = (card: {title: string, id: string}) => {
-		handleDragStart(card);
+	const handleMouseStart = (e: React.DragEvent<HTMLDivElement>, cardId: string) => {
+		handleDragStart(e, cardId);
 		handleMouseDown();
 	}
 	
-
 	return (
 		<div className="flex">
 			<DropIndicator beforeId={tree.id}/>
 			<div 
 				className="relative inline-block" 
-				onDragStart={() => handleMouseStart({title: tree.name, id: tree.id})}
+				onDragStart={(e) => handleMouseStart(e, tree.id)}
 				onDragEnd={handleMouseUp}
 				onMouseDown={handleMouseDown}
 			>
@@ -66,7 +63,6 @@ export function TreeCard({
 						<CardFooter></CardFooter>
 					</Card>
 				</button>
-				<ClearTreeDialog selectedTree={tree}></ClearTreeDialog>
 			</div>
 		</div>
 	);
