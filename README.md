@@ -14,3 +14,6 @@ all versions of todo list application
     **JS LocalStorage!**  
 
     - Pretty things up! Figure out how elements should be formatted, positioned, sized, etc.
+
+## Useful Sources:
+- https://www.youtube.com/watch?v=O5lZqqy7VQE&t=769s

@@ -1,4 +1,4 @@
-import React, { DragEvent } from 'react';
+import React from 'react';
 import { useTreesContext } from '@/components/providers/TreesProvider';
 import CreateTreeDialog from '@/components/create-tree-dialog';
 import './App.css';
@@ -12,7 +12,6 @@ import BurnArea from '@/react-components/BurnArea';
 
 const Dashboard: React.FC = () => {
 	const { trees, setTrees } = useTreesContext();
-	// const [card, setCard] = React.useState<{id: string, title: string} | undefined>(undefined);
 
 	return (
 		<div
