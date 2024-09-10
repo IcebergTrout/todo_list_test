@@ -16,6 +16,14 @@ import {
 } from "../components/ui/dialog";
 import { Input } from "../components/ui/input";
 import { Label } from "@/components/ui/label"
+import { useForm } from "react-hook-form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  treeString: z.string(),
+})
 
 export default function CreateTreeDialog({
   trees,
@@ -24,12 +32,19 @@ export default function CreateTreeDialog({
   trees: Tree[];
   setTrees: (trees: Tree[]) => void;
 }) {
-  const [treeName, setTreeName] = useState("")
 
-  const createTree = () => {
-    const newTree = new Tree(treeName);
-    setTrees([...trees, newTree])
-    setTreeName("");
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      treeString: "",
+    },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("hello?");
+    console.log(values)
+    const newTree = new Tree(values.treeString);
+    setTrees([...trees, newTree]);
   }
 
   return (
@@ -45,9 +60,28 @@ export default function CreateTreeDialog({
               Make a new Tree!
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4 dark:text-slate-300">
-              <Label htmlFor="name" className="text-right">
+          <div className="">
+            <div className="grid gap-4 py-4">
+              <Form {...form}>
+                <form id="createTreeForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                  <FormField
+                    control={form.control}
+                    name="treeString"
+                    render={({ field }) => (
+                      <FormItem className="grid grid-cols-4 items-center gap-4 dark:text-slate-300">
+                        <FormLabel>Username</FormLabel>
+                        <FormControl>
+                          <Input className="w-fit" placeholder="shadcn" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* <Button type="submit">Submit</Button> */}
+                </form>
+              </Form>
+
+              {/* <Label htmlFor="name" className="text-right">
                 Name
               </Label>
               <Input
@@ -55,12 +89,12 @@ export default function CreateTreeDialog({
                 className="col-span-3"
                 value={treeName}
                 onInput={e => setTreeName(e.currentTarget.value)}
-              />
+              /> */}
             </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="submit" onClick={() => createTree()}>Submit</Button>
+              <Button form="createTreeForm" type="submit">Submit</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
