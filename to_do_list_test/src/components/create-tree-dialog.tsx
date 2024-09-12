@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import { Tree } from "@/backend/Tree";
 import { Button } from "../components/ui/button";
 import {
@@ -15,14 +13,13 @@ import {
   DialogTrigger,
 } from "../components/ui/dialog";
 import { Input } from "../components/ui/input";
-import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
-  treeString: z.string(),
+  treeName: z.string(),
 })
 
 export default function CreateTreeDialog({
@@ -36,14 +33,12 @@ export default function CreateTreeDialog({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      treeString: "",
+      treeName: "",
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("hello?");
-    console.log(values)
-    const newTree = new Tree(values.treeString);
+    const newTree = new Tree(values.treeName);
     setTrees([...trees, newTree]);
   }
 
@@ -66,7 +61,7 @@ export default function CreateTreeDialog({
                 <form id="createTreeForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                   <FormField
                     control={form.control}
-                    name="treeString"
+                    name="treeName"
                     render={({ field }) => (
                       <FormItem className="grid grid-cols-4 items-center gap-4 dark:text-slate-300">
                         <FormLabel>Username</FormLabel>
@@ -77,19 +72,8 @@ export default function CreateTreeDialog({
                       </FormItem>
                     )}
                   />
-                  {/* <Button type="submit">Submit</Button> */}
                 </form>
               </Form>
-
-              {/* <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input
-                id="name"
-                className="col-span-3"
-                value={treeName}
-                onInput={e => setTreeName(e.currentTarget.value)}
-              /> */}
             </div>
           </div>
           <DialogFooter>
