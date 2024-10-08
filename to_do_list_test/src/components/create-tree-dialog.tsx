@@ -64,9 +64,9 @@ export default function CreateTreeDialog({
                     name="treeName"
                     render={({ field }) => (
                       <FormItem className="grid grid-cols-4 items-center gap-4 dark:text-slate-300">
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>Name</FormLabel>
                         <FormControl>
-                          <Input className="w-fit" placeholder="shadcn" {...field} />
+                          <Input className="w-fit" placeholder="name" {...field} autoComplete="off"/>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
