@@ -25,3 +25,6 @@ dist-ssr
 
 src/server/db/*
 !src/server/db/.gitkeep
+
+to_do_list_test/src/data/database.db
+
