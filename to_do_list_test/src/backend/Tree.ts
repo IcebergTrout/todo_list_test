@@ -32,7 +32,7 @@ export class Tree {
 		yield node;
 	}
 
-	insert(parentNode: TreeNode, value: string) {
+	insert(parentNode: TreeNode, value: string = "") {
 		const uid = uuidv4();
 		if (parentNode) {
 			const newNode = new TreeNode(uid, value, parentNode);

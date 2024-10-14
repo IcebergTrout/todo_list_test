@@ -2,12 +2,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class TreeNode {
 	id: string;
-	value: string | undefined;
+	value: string;
 	checked: boolean;
 	parent?: TreeNode;
 	children: TreeNode[] = [];
 
-	constructor(id: string = uuidv4(), value?: string, parent?: TreeNode) {
+	constructor(id: string = uuidv4(), value: string = "", parent?: TreeNode) {
 		this.id = id;
 		this.value = value;
 		this.parent = parent;

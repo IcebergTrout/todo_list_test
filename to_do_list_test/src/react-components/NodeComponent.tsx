@@ -10,15 +10,16 @@ interface TreeProps {
 	node: TreeNode;
 	tree: Tree;
 	updateTree: (tree: Tree) => void;
+	handleInsert: (parentNode: TreeNode) => void
 }
 
-const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree }) => {
+const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree, handleInsert }) => {
 	const [, setUpdate] = useState(true); // State to trigger re-render
 	const textAreaRefs = useRef<Record<string, HTMLTextAreaElement | null>>({});
 	const [focusState, setFocusState] = useState<boolean>(false);
 	const [expanded, setExpanded] = useState(false);
 
-	const handleCheckboxChange = (node: TreeNode | undefined) => {
+	const handleCheckboxChange = (node: TreeNode) => {
 		if (node) {
 			node.checked = !node.checked;
 			// console.log(`Checkbox for node ${node.id} is ${node.checked ? 'checked' : 'unchecked'}`);
@@ -27,15 +28,7 @@ const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree }) => {
 		setUpdate(prev => !prev); // Trigger re-render
 	};
 
-	const handleInsert = (parentNode: TreeNode | undefined) => {
-		if (parentNode) {
-			tree.insert(parentNode, 'new child');
-			updateTree(tree);
-		}
-		setUpdate(prev => !prev); // Trigger re-render
-	};
-
-	const handleRemove = (node: TreeNode | undefined) => {
+	const handleRemove = (node: TreeNode) => {
 		if (node) {
 			tree.remove(node);
 			updateTree(tree);
@@ -117,7 +110,7 @@ const NodeComponent: React.FC<TreeProps> = ({ node, tree, updateTree }) => {
 		</div>
 		{node.children.length > 0 && expanded && (
 			<ul className='list-none list-inside pl-16 pb-6'>
-				{node.children.map((child) => <NodeComponent key={child.id} node={child} tree={tree} updateTree={updateTree} />)}
+				{node.children.map((child) => <NodeComponent key={child.id} node={child} tree={tree} updateTree={updateTree} handleInsert={handleInsert} />)}
 			</ul>
 		)}
 	</li>);

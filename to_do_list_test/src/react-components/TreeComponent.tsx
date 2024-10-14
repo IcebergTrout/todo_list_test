@@ -12,9 +12,9 @@ interface TreeProps {
 const TreeComponent: React.FC<TreeProps> = ({ tree, updateTree }) => {
 	const [, setUpdate] = useState(false); // State to trigger re-render
 
-	const handleInsert = (parentNode: TreeNode | undefined) => {
+	const handleInsert = (parentNode: TreeNode) => {
 		if (parentNode) {
-			tree.insert(parentNode, 'new child');
+			tree.insert(parentNode);
 			updateTree(tree);
 		}
 		setUpdate(prev => !prev); // Trigger re-render
@@ -34,7 +34,7 @@ const TreeComponent: React.FC<TreeProps> = ({ tree, updateTree }) => {
 						onClick={() => handleInsert(tree.root)}>+
 					</Button>
 				</div>
-				{tree.root.children.map((child: TreeNode) => <NodeComponent key={child.id} node={child} tree={tree} updateTree={updateTree}/>)}
+				{tree.root.children.map((child: TreeNode) => <NodeComponent key={child.id} node={child} tree={tree} updateTree={updateTree} handleInsert={handleInsert}/>)}
 			</ul>
 		</>
 	);
