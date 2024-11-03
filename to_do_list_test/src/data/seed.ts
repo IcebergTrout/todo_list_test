@@ -1,13 +1,72 @@
-import sqlite3 from 'sqlite3'
+import { Database } from 'sqlite3'
 
-const db = new sqlite3.Database('database.db');
+let db: Database;
 
-db.serialize(() => {
-  db.run("INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com')");
-  db.run("INSERT INTO users (name, email) VALUES ('Jane Smith', 'jane@example.com')");
-  
-  db.run("INSERT INTO products (name, price) VALUES ('Laptop', 999.99)");
-  db.run("INSERT INTO products (name, price) VALUES ('Headphones', 49.99)");
-});
+function connectDB() {
+  db = new Database('./src/data/database.db', (err) => {
+    if (err) {
+      console.error(`Couldn't connect to database:`, err.message);
+    }
+  });
+}
 
-db.close();
+export async function seedDatabase() {
+  return new Promise<void>((resolve, reject) => {
+    connectDB();
+    db.serialize(() => {
+      db.run(`CREATE TABLE IF NOT EXISTS todo_list_trees (
+          id TEXT PRIMARY KEY UNIQUE,
+          name TEXT NOT NULL UNIQUE
+        )`, (err) => {
+        if (err) {
+          console.error('Seeding failed:', err.message); // Log the error if seeding fails
+          return reject(err);
+        }
+        resolve();
+      }
+      );
+    });
+    db.close();
+  });
+}
+
+export async function clearDatabase() {
+  return new Promise<void>((resolve, reject) => {
+    db.serialize(() => {
+      let treeTables: any[] = [];
+      db.all(`SELECT name FROM sqlite_master WHERE type='table'`, [], (err, rows: { name: string }[]) => {
+        if (err) {
+          console.error('Error fetching tables:', err.message);
+        } else {
+          rows.map(row => row.name);
+          treeTables = rows;
+          // console.log('Tables in the database:', rows.map(row => row.name));
+        }
+      });
+
+      for (const x in treeTables) {
+        db.run(`DROP TABLE IF EXISTS ${x}`);
+      }
+
+      db.run(`DELETE FROM Trees`, (err) => {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
+  });
+}
+
+// Close the database connection when the script is finished
+export async function closeDatabase() {
+  return new Promise<void>((resolve, reject) => {
+    db.close((err) => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
+}
+
+if (require.main === module) {
+  closeDatabase();
+}
+

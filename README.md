@@ -15,5 +15,10 @@ all versions of todo list application
 
     - Pretty things up! Figure out how elements should be formatted, positioned, sized, etc.
 
+## How to test:
+npm test
+
 ## Useful Sources:
 - https://www.youtube.com/watch?v=O5lZqqy7VQE&t=769s
+- https://www.sqlitetutorial.net/sqlite-nodejs/query/
+- https://github.com/TryGhost/node-sqlite3/wiki/API#execsql--callback
